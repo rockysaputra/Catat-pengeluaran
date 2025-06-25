@@ -23,6 +23,7 @@ export async function parsePengeluaran(text) {
         - Gunakan hanya kategori berikut: 
           ["Makanan", "Minuman", "Transportasi", "Belanja", "Kebutuhan Rumah", "Hiburan", "Kesehatan", "Lainnya"]
         - Jika tidak yakin, gunakan "Lainnya"
+        - Jika pada angka tertulis "rb" atau "jt", ubah ke angka biasa (500rb jadi 500000, 10jt jadi 10000000)
 
         Contoh input:
         "kopi janji jiwa 25000, gojek 15000, Popok Bayi 25000, pulsa 10000, wifi 500rb, laptop 10jt"
