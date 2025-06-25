@@ -21,6 +21,12 @@ const limiter = rateLimit({
   },
 });
 
+app.get("/healt-check",async(req,res)=>{
+    res.status(200).json({
+      status:200,
+      message: "Server is healthy",
+    })
+})
 
 app.post("/upload-data", limiter, async (req, res) => {
   try {
