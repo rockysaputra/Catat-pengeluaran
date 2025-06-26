@@ -34,7 +34,7 @@ export function initBot(){
 
         let total = 0
         const lines = data.map((item)=>{
-          total += item.jjumlah
+          total += item.jumlah
           return `📌 ${item.deskripsi} — Rp${item.jumlah.toLocaleString('id-ID')} (${item.kategori})`
         })
 
