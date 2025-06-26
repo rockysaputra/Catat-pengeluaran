@@ -26,6 +26,7 @@ export function initBot(){
       const res = await axios.post(ENDPOINT, {
         text: userInput
       });
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
       if (res.status === 200 || res.status === 202) {
         let responseData = res.data;
