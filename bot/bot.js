@@ -33,7 +33,7 @@ export function initBot(app){
       return;
     }
     bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
-    console.log("mencatat pengeluran")
+    console.log("mencatat pengeluran", chatId)
     try {
 
       const res = await axios.post(ENDPOINT, {
