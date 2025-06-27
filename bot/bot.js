@@ -32,8 +32,9 @@ export function initBot(app){
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
     }
+    bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
+    console.log("mencatat pengeluran")
     try {
-      bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
 
       const res = await axios.post(ENDPOINT, {
         text: userInput
