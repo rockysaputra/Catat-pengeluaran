@@ -1,11 +1,21 @@
 import TelegramBot from 'node-telegram-bot-api';
 import axios from 'axios';
 
-export function initBot(){
-  const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
+export function initBot(app){
   console.log("🤖 Bot is polling and waiting for messages...");
-
+  
   const ENDPOINT = process.env.ENDPOINT_URL
+  const WEBHOOK_PATH = `/bot${process.env.TELEGRAM_BOT_TOKEN}`;
+  const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { webHook: true });
+
+  const DOMAIN = process.env.WEBHOOK_DOMAIN;
+  bot.setWebHook(`${DOMAIN}${WEBHOOK_PATH}`);
+
+  app.post(WEBHOOK_PATH, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+  });
+
 
   bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -23,6 +33,8 @@ export function initBot(){
       return;
     }
     try {
+      bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
+
       const res = await axios.post(ENDPOINT, {
         text: userInput
       });

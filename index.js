@@ -56,9 +56,9 @@ app.post("/upload-data", limiter, async (req, res) => {
   }
 });
 
+initBot(app);
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`✅ Server ready on http://localhost:${port}`);
 });
-
-initBot();
