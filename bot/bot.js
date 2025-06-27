@@ -16,7 +16,7 @@ export function initBot(app){
     res.sendStatus(200);
   });
 
-  const allowedChatIds = process.env.CHAT_ID
+  const allowedChatIds = Number(process.env.CHAT_ID)
 
   bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
