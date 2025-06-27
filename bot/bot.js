@@ -16,6 +16,7 @@ export function initBot(app){
     res.sendStatus(200);
   });
 
+  const allowedChatIds = process.env.CHAT_ID
 
   bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -32,6 +33,12 @@ export function initBot(app){
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
     }
+
+    if (chatId != allowedChatIds){
+      bot.sendMessage(chatId, '🚫 Kamu tidak diizinkan untuk menggunakan bot ini.');
+      return;
+    }
+
     bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
     console.log("mencatat pengeluran", chatId)
     try {
