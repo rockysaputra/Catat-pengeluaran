@@ -29,6 +29,11 @@ export function initBot(app){
       return;
     }
 
+    if(userInput === "/summary"){
+      bot.sendMessage(chatId, "📊 Menyiapkan ringkasan pengeluaran bulanan...");
+      return;
+    }
+
     if (userInput.startsWith('/')) {
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
