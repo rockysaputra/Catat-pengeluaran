@@ -46,7 +46,7 @@ export function initBot(app){
               'Content-Type': 'application/json'
             }
         });
-        
+        return;
       } catch (error) {
         console.error('Error saat kirim data:', error.message);
         bot.sendMessage(chatId, '🚨 Error saat mengambil data summary mu');
