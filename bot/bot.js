@@ -29,11 +29,6 @@ export function initBot(app){
       return;
     }
 
-    if(userInput === "/summary"){
-      bot.sendMessage(chatId, "📊 Menyiapkan ringkasan pengeluaran bulanan...");
-      return;
-    }
-
     if (userInput.startsWith('/')) {
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
@@ -43,6 +38,25 @@ export function initBot(app){
       bot.sendMessage(chatId, '🚫 Kamu tidak diizinkan untuk menggunakan bot ini.');
       return;
     }
+
+    if(userInput === "/summary"){
+      bot.sendMessage(chatId, "📊 Menyiapkan ringkasan pengeluaran bulanan...");
+      try {
+        const WEBHOOK_URL = process.env.WEBHOOK_SUMARY_URL;
+         const res = await axios.post(WEBHOOK_URL, {
+            chat_id: chatId
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        });
+        
+      } catch (error) {
+        console.error('Error saat kirim data:', error.message);
+        bot.sendMessage(chatId, '🚨 Error saat mengambil data summary mu');
+      }
+    }
+
 
     bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
     console.log("mencatat pengeluran", chatId)
