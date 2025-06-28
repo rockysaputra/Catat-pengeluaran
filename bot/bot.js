@@ -57,43 +57,43 @@ export function initBot(app){
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
     }
+    else{
+      bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
+      console.log("mencatat pengeluran", chatId)
+      try {
 
+        const res = await axios.post(ENDPOINT, {
+          text: userInput
+        });
+        const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-    bot.sendMessage(chatId, "📝 Mencatat pengeluaran...");
-    console.log("mencatat pengeluran", chatId)
-    try {
+        if (res.status === 200 || res.status === 202) {
+          let responseData = res.data;
+          let data = responseData.data
 
-      const res = await axios.post(ENDPOINT, {
-        text: userInput
-      });
-      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+          let total = 0
+          const lines = data.map((item)=>{
+            total += item.jumlah
+            return `📌 ${item.deskripsi} — Rp${item.jumlah.toLocaleString('id-ID')} (${item.kategori})`
+          })
 
-      if (res.status === 200 || res.status === 202) {
-        let responseData = res.data;
-        let data = responseData.data
+          const reply = [
+            '✅ Tercatat!',
+            '',
+            ...lines,
+            '',
+            `📅 Tanggal: ${today}`,
+            `💰 Total hari ini: Rp${total.toLocaleString('id-ID')}`
+          ].join('\n');
 
-        let total = 0
-        const lines = data.map((item)=>{
-          total += item.jumlah
-          return `📌 ${item.deskripsi} — Rp${item.jumlah.toLocaleString('id-ID')} (${item.kategori})`
-        })
-
-        const reply = [
-          '✅ Tercatat!',
-          '',
-          ...lines,
-          '',
-          `📅 Tanggal: ${today}`,
-          `💰 Total hari ini: Rp${total.toLocaleString('id-ID')}`
-        ].join('\n');
-
-        bot.sendMessage(chatId, reply);
-      } else {
-        bot.sendMessage(chatId, '❌ Gagal mencatat!');
+          bot.sendMessage(chatId, reply);
+        } else {
+          bot.sendMessage(chatId, '❌ Gagal mencatat!');
+        }
+      } catch (error) {
+        console.error('Error saat kirim data:', error.message);
+        bot.sendMessage(chatId, '🚨 Error saat kirim data ke server!');
       }
-    } catch (error) {
-      console.error('Error saat kirim data:', error.message);
-      bot.sendMessage(chatId, '🚨 Error saat kirim data ke server!');
     }
   });
 }
