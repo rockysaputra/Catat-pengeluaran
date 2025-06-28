@@ -29,10 +29,6 @@ export function initBot(app){
       return;
     }
 
-    if (userInput.startsWith('/')) {
-      bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
-      return;
-    }
 
     if (chatId != allowedChatIds){
       bot.sendMessage(chatId, '🚫 Kamu tidak diizinkan untuk menggunakan bot ini.');
@@ -55,6 +51,11 @@ export function initBot(app){
         console.error('Error saat kirim data:', error.message);
         bot.sendMessage(chatId, '🚨 Error saat mengambil data summary mu');
       }
+    }
+
+    if (userInput.startsWith('/')) {
+      bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
+      return;
     }
 
 
