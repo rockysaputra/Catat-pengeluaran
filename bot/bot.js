@@ -53,7 +53,7 @@ export function initBot(app){
       }
     }
 
-    if (userInput.startsWith('/')) {
+    if (userInput.startsWith('/') && userInput !== "/summary" && userInput !== "/start") {
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
     }
