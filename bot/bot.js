@@ -54,7 +54,26 @@ export function initBot(app){
       }
     }
 
-    if (userInput.startsWith('/') && userInput !== "/summary" && userInput !== "/start") {
+    if(userInput === "/remaining"){
+      bot.sendMessage(chatId, "📊 ⏳ Sedang menghitung sisa gaji kamu...");
+      try {
+        const WEBHOOK_URL = process.env.WEBHOOK_SUMARY_URL;
+         const res = await axios.post(WEBHOOK_URL, {
+            chat_id: chatId,
+            type:"remaining"
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        });
+        return;
+      } catch (error) {
+        console.error('Error saat kirim data:', error.message);
+        bot.sendMessage(chatId, '🚨 Error saat mengambil data summary mu');
+      }
+    }
+
+    if (userInput.startsWith('/') && userInput !== "/summary" && userInput !== "/start" && userInput !== "/remaining") {
       bot.sendMessage(chatId, '❓ Perintah tidak dikenal. Kirim pengeluaran biasa aja bro~');
       return;
     }
