@@ -40,7 +40,8 @@ export function initBot(app){
       try {
         const WEBHOOK_URL = process.env.WEBHOOK_SUMARY_URL;
          const res = await axios.post(WEBHOOK_URL, {
-            chat_id: chatId
+            chat_id: chatId,
+            type:"summary"
           }, {
             headers: {
               'Content-Type': 'application/json'
